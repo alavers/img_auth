@@ -1,0 +1,29 @@
+<!-- HTML -->
+<img id="myImage" src="/sample.jpg" />
+
+<script>
+  // JavaScript
+  document.getElementById('myImage').addEventListener('load', function () {
+    // Intercept the request
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', this.src, true);
+
+    // Set the authentication header
+    xhr.setRequestHeader('Authorization', 'Bearer YOUR_JWT_TOKEN');
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        // Get the image data
+        var imgData = xhr.response;
+
+        // Create a base64 URL
+        var base64Image = 'data:image/jpeg;base64,' + btoa(imgData);
+
+        // Set the modified image source
+        document.getElementById('myImage').src = base64Image;
+      }
+    };
+
+    xhr.send();
+  });
+</script>
